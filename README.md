@@ -5,6 +5,7 @@
 #### requirement
 ```
 gem install rspec
+gem install 'rspec-collection_matchers'
 ```
 
 #### run tests

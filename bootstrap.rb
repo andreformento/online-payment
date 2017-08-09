@@ -101,13 +101,7 @@ end
 
 class EmailService
   def send(customer, message)
-    p "Send email to #{customer.name} <#{customer.email}>: #{message}"
-  end
-end
-
-class VoucherService
-  def apply(customer, voucherValue)
-    customer.applyVoucher(voucherValue)
+    "Send email to #{customer.name} <#{customer.email}>: #{message}"
   end
 end
 
@@ -224,7 +218,7 @@ end
 
 class Membership
   def activeAccount(customer)
-    p "Active account of #{customer.name}"
+    "Active account of #{customer.name}"
   end
 end
 
