@@ -95,7 +95,7 @@ end
 
 class ShippingLabelGenerator
   def produce(product, message = "")
-    p "generating shipping label for product #{product.name} #{message}"
+    "generating shipping label for product #{product.name} #{message}"
   end
 end
 
