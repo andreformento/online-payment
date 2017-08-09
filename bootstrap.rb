@@ -114,7 +114,6 @@ class OrderItemPhysical < OrderItem
   end
   def process
     shipping_label_generator.produce(@product)
-    #p "OrderItemPhysical: Se o pagamento for para um item físico, você deverá gerar um shipping label para o mesmo ser colocado na caixa do envio"
   end
 end
 
@@ -128,9 +127,9 @@ class OrderItemMembership < OrderItem
   end
 
   def process
-    @membership.activeAccount(@order.customer)
-    @email_service.send(@order.customer, "Sua assinatura foi ativada")
-    #p "OrderItemMembership: Caso o pagamento seja uma assinatura de serviço, você precisa ativar a assinatura, e notificar o usuário através de e-mail sobre isto"
+    account = @membership.activeAccount(@order.customer)
+    email_sent = @email_service.send(@order.customer, "Sua assinatura foi ativada")
+    "#{account}; #{email_sent}"
   end
 end
 
@@ -143,7 +142,6 @@ class OrderItemBook < OrderItem
   end
   def process
     shipping_label_generator.produce(@product, "Item isento de impostos conforme disposto na Constituição Art. 150, VI, d")
-    #p "OrderItemBook: Caso o pagamento seja um livro comum, você precisa gerar o shipping label com uma notificação de que trata-se de um item isento de impostos conforme disposto na Constituição Art. 150, VI, d"
   end
 end
 
@@ -156,9 +154,8 @@ class OrderItemDigital < OrderItem
   end
 
   def process
-    @email_service.send(@order.customer, "Sua compra com o item #{@product.name} foi efetuada e você ganhou um voucher de 10 reais")
     @order.customer.applyVoucher(10)
-    # p "OrderItemDigital: Caso o pagamento seja de alguma mídia digital (música, vídeo), além de enviar a descrição da compra por e-mail ao comprador, conceder um voucher de desconto de R$ 10 ao comprador associado ao pagamento"
+    @email_service.send(@order.customer, "Sua compra com o item #{@product.name} foi efetuada e você ganhou um voucher de 10 reais")
   end
 end
 
